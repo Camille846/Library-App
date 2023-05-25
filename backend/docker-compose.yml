@@ -1,0 +1,7 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "library"
+    ports:
+      - "5432:5432"
