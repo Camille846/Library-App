@@ -7,7 +7,6 @@ uuidv4 - geração de id unico
 prisma - orm
 api de livros - 
 
-
 banco de dados
 
 user - nome completo, nome de usuário, email, password
