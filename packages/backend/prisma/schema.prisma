@@ -18,5 +18,6 @@ model User {
   email     String   @unique
   full_name String?
   username String @unique
-  password String
+  password String 
 }
+//@db.Text

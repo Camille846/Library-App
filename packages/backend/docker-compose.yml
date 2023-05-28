@@ -2,6 +2,8 @@ services:
   postgres:
     image: postgres
     environment:
+      POSTGRES_USER: "library"
       POSTGRES_PASSWORD: "library"
     ports:
       - "5432:5432"
+   

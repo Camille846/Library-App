@@ -7,16 +7,21 @@
     "packages/eslint-config"
   ],
   "scripts": {
-    "dev:backend": "tsnd --respawn @library/backend/src/server.ts"
+    "dev:backend": "tsnd --respawn @library/backend/src/server.ts",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    
-    "@library/eslint-config": "*"
+    "@library/eslint-config": "*",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.2"
   },
   "dependencies": {
     "eslint-plugin-prettier": "^4.2.1"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
   }
 }
