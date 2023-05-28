@@ -13,11 +13,11 @@ datasource db {
 
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id 
   createdAt DateTime @default(now())
   email     String   @unique
-  full_name String?
-  username String @unique
-  password String 
+  full_name String
+  username  String @unique
+  password  String 
 }
 //@db.Text
