@@ -20,4 +20,10 @@ model User {
   username  String @unique
   password  String 
 }
+
+
+
+model Book{
+
+}
 //@db.Text

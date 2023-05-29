@@ -1,12 +1,14 @@
 import { FastifyInstance, FastifyServerOptions } from 'fastify'
-import { userRoutes } from './modules/users/http/routes/users.routes'
 
-export async function routes(
+export async function userRoutes(
   fastify: FastifyInstance,
   options: FastifyServerOptions
 ) {
-  fastify.register(userRoutes, { prefix: 'users' })
+  await fastify.register(import('@fastify/rate-limit'), {
+    max: 5,
+    timeWindow: '1 minute',
+  })
   fastify.get('/', async (request, reply) => {
-    return { hello: 'world' }
+    return reply.status(201).send()
   })
 }

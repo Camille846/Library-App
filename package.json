@@ -8,6 +8,8 @@
   ],
   "scripts": {
     "dev:backend": "tsnd --respawn @library/backend/src/server.ts",
+    "build:backend": "tsc --build packages/backend/tsconfig.json",
+    "start:backend": "node packages/backend/dist/server.js",
     "prepare": "husky install",
     "test": "npm run test --workspaces"
   },
@@ -16,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@library/eslint-config": "*",
+    "@types/jest": "^29.5.1",
     "husky": "^8.0.0",
     "jest": "^29.5.0",
     "lint-staged": "^13.2.2",
