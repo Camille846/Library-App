@@ -18,12 +18,19 @@ model User {
   email     String   @unique
   full_name String
   username  String @unique
-  password  String 
+  avatar    String
+  password     String 
 }
 
 
 
 model Book{
-
+  id        Int      @id 
+  createdAt DateTime @default(now())
+  email     String   @unique
+  full_name String
+  username  String @unique
+  avatar    String
+  password     String 
 }
 //@db.Text

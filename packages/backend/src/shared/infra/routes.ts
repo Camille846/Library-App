@@ -1,5 +1,10 @@
-import { FastifyInstance, FastifyServerOptions } from 'fastify'
-import { userRoutes } from './modules/users/http/routes/users.routes'
+import {
+  FastifyInstance,
+  FastifyReply,
+  FastifyRequest,
+  FastifyServerOptions,
+} from 'fastify'
+import { userRoutes } from '@modules/users/http/routes/users.routes'
 
 export async function routes(
   fastify: FastifyInstance,
