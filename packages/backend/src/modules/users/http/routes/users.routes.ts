@@ -3,7 +3,8 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import rateLimit from '@fastify/rate-limit'
 import { AppError } from '@shared/errors/AppError'
 import { DiskImplementation } from '@shared/container/providers/StorageProvider/implementations/DiskImplementation'
-import zod from 'zod'
+
+import { CreateUserController } from '@modules/users/controllers/CreateUserController'
 
 interface Request extends FastifyRequest {
   file?: {
@@ -11,6 +12,7 @@ interface Request extends FastifyRequest {
   }
 }
 const diskImplementation = new DiskImplementation()
+const createUserController = new CreateUserController()
 
 export async function userRoutes(fastify: FastifyInstance) {
   await fastify.register(rateLimit, {
@@ -32,18 +34,6 @@ export async function userRoutes(fastify: FastifyInstance) {
     method: 'POST',
     url: '/new',
     preHandler: upload.single('avatar'),
-    handler: async function (request: Request, reply: FastifyReply) {
-      const requestSchema = zod.object({
-        full_name: zod.string(),
-        username: zod.string(),
-        email: zod.string().email(),
-        password: zod.string(),
-      })
-
-      const { email } = requestSchema.parse(request.body)
-      console.log(email)
-
-      reply.code(200).send()
-    },
+    handler: createUserController.handle,
   })
 }

@@ -3,8 +3,8 @@ import { v4 } from 'uuid'
 export class User {
   public readonly id: string
 
-  public name: string
-  public fullname: boolean
+  public username: string
+  public full_name: string
   public email: string
   public password: string
 

@@ -4,13 +4,14 @@
   "description": "backend for library app",
   "main": "index.js",
   "scripts": {
-    "test": "echo testing",
+    "test": "jest",
     "dev": "tsx watch ./src/shared/infra/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.2",
     "@types/node": "^12.20.55",
     "@types/uuid": "^9.0.1",
     "jest": "^29.5.0",
@@ -21,6 +22,7 @@
   "dependencies": {
     "@fastify/rate-limit": "^8.0.0",
     "@fastify/static": "^6.10.2",
+    "@swc/jest": "^0.2.26",
     "fastify": "^4.17.0",
     "fastify-multer": "^2.0.3",
     "module-alias": "^2.2.2",
