@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
-import { CreateUserService } from '../services/CreateUserService'
+import { CreateUserService } from '../../services/CreateUserService'
 import zod from 'zod'
+import { AppError } from '@shared/errors/AppError'
 
 export class CreateUserController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
@@ -14,10 +15,18 @@ export class CreateUserController {
 
     const createUser = container.resolve(CreateUserService)
 
-    const inputUser = requestSchema.parse(request.body)
+    type IInputUser = zod.infer<typeof requestSchema>
+
+    let inputUser: IInputUser = {} as IInputUser
+
+    try {
+      inputUser = requestSchema.parse(request.body)
+    } catch {
+      throw new AppError('invalid fields', 409)
+    }
 
     const user = await createUser.execute(inputUser)
 
-    reply.code(200).send(user)
+    reply.code(201).send(user)
   }
 }

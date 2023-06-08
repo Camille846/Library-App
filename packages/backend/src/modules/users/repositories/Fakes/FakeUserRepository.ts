@@ -4,6 +4,7 @@ import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 export class FakeUserRepository implements IUsersRepository {
   private Users: [ICreateUserDTO] = [
     {
+      id: 'ew9ftyuews7fgysd',
       username: 'ballistc',
       email: 'ballistc@email.com',
       full_name: 'Pedro Vitor',

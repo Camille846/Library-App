@@ -14,11 +14,14 @@ export class CreateUserService {
     private hashProvider: IHashProvider
   ) {}
   async execute(
-    user: ICreateUserDTO
-  ): Promise<Omit<ICreateUserDTO, 'password'>> {
+    user: Omit<ICreateUserDTO, 'id'>
+  ): Promise<Partial<ICreateUserDTO>> {
     const userAlreadyExists = await this.usersRepository.findByEmail(user.email)
 
     if (userAlreadyExists) throw new AppError('user already exists!')
+
+    if (user.password.length < 8)
+      throw new AppError('Password must have at least 8 caracteries', 409)
 
     const hashedPassword = await this.hashProvider.hashPassword(user.password)
 
@@ -29,7 +32,10 @@ export class CreateUserService {
       password: hashedPassword,
     })
 
-    const response = await this.usersRepository.createUser(createdUser)
+    const response: Partial<ICreateUserDTO> =
+      await this.usersRepository.createUser(createdUser)
+
+    delete response['password']
 
     return response
   }

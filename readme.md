@@ -14,3 +14,23 @@ Aplicativo de Biblioteca Digital pessoal que permite ao usuário criar uma bibli
 ![image](https://github.com/Camille846/Library-App/assets/83260908/79a26a1c-acab-40e7-aebd-8b66362a9197)
 
 ![image](https://github.com/Camille846/Library-App/assets/83260908/73a0e653-cc4a-4127-8eae-fb3c88f35d92)
+
+# RFs (REQUISITOS FUNCIONAIS)
+
+- [ ] O sistema deve permitir criar uma conta
+- [ ] O sistema deve permitir autenticação do usuário.
+- [ ] O sistema deve permitir consulta de livros pelo usuário
+- [ ] O sistema deve permitir adição de livros em bibliotecas pelo usuário
+- [ ] O sistema deve permitir remoção de livros de bilbiotecas pelo usuário
+- [ ] O sistema deve permitir criação de bibliotecas pelo usuário
+- [ ] O sistema deve permitir compartilhamento de biblioteca entre usuários.
+
+# RN (REGRA DE NEGOCIO)
+- [ ] O sistema não permite criação de conta com o mesmo email. 
+- [ ] O sistema não permite criação de conta com o mesmo nome de usuário. 
+- [ ] É necessário que o usuário crie senha com mínimo de 8 caracteres para criação de usuário.
+
+# RNFs (REQUISITOS NÃO FUNCIONAIS)
+- [ ] O sistema permite autenticar com Google e Facebook
+- [ ] O sistema tem sistema de filtragem por categorias.
+- [ ] O compartilhamento entre usuários pode ocorrer dentro do sistema e por link.

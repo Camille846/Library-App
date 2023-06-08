@@ -4,7 +4,7 @@ import rateLimit from '@fastify/rate-limit'
 import { AppError } from '@shared/errors/AppError'
 import { DiskImplementation } from '@shared/container/providers/StorageProvider/implementations/DiskImplementation'
 
-import { CreateUserController } from '@modules/users/controllers/CreateUserController'
+import { CreateUserController } from '@modules/users/http/controllers/CreateUserController'
 
 interface Request extends FastifyRequest {
   file?: {
@@ -25,7 +25,7 @@ export async function userRoutes(fastify: FastifyInstance) {
     url: '/profile',
     preHandler: upload.single('avatar'),
     handler: async function (request: Request, reply: FastifyReply) {
-      diskImplementation.saveFile(request.file?.filename ?? '')
+      diskImplementation.saveFile(request.file?.filename ?? 'avatar')
       reply.code(200).send()
     },
   })

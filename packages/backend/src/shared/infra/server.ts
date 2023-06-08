@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import 'dotenv/config'
 
 import Fastify from 'fastify'
 import multer from 'fastify-multer'
@@ -7,14 +8,9 @@ import '@modules/users/providers'
 import '@shared/container/providers'
 import { routes } from './routes'
 import path from 'path'
+
 const fastify = Fastify({
   logger: true,
-})
-
-fastify.register(import('@fastify/static'), {
-  root: path.join(__dirname, '../uploads'),
-  prefix: '/uploads/', // optional: default '/'
-  // optional: default {}
 })
 
 async function rateLimit() {
@@ -24,15 +20,22 @@ async function rateLimit() {
   })
 }
 rateLimit()
+
+fastify.register(import('@fastify/static'), {
+  root: path.join(__dirname, '../uploads'),
+  prefix: '/uploads/', // optional: default '/'
+  // optional: default {}
+})
 fastify.register(multer.contentParser)
 fastify.register(routes)
 
-fastify.listen({ port: 3000 }, function (err, address) {
+fastify.listen({ port: 3333 }, function (err, address) {
   if (err) {
     fastify.log.error(err)
 
     process.exit(1)
   }
+  console.log(process.env.DATABASE_URL)
   console.log(fastify.printRoutes())
   // Server is now listening on ${address}
 })

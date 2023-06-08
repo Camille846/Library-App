@@ -1,6 +1,9 @@
 import { container } from 'tsyringe'
+import { HashProviderImplemention } from './HashProvider/implementations/HashProviderImplemention'
 
-import { FakeHashProvider } from './HashProvider/fakes/FakeHashProvider'
 import { IHashProvider } from './HashProvider/models/IHashProvider'
 
-container.registerSingleton<IHashProvider>('HashProvider', FakeHashProvider)
+container.registerSingleton<IHashProvider>(
+  'HashProvider',
+  HashProviderImplemention
+)

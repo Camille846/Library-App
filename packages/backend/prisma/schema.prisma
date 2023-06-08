@@ -10,27 +10,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
-  id        Int      @id 
+  id        String      @id 
   createdAt DateTime @default(now())
   email     String   @unique
   full_name String
-  username  String @unique
-  avatar    String
-  password     String 
+  username  String   @unique
+  avatar    String?
+  password  String
+  libraries Library[]
 }
 
-
+model Library {
+  id        String   @id 
+  createdAt DateTime @default(now())
+  name      String
+  user      User     @relation(fields: [user_id],references: [id])
+  user_id   String
+  books     Book[]
+}
 
 model Book{
-  id        Int      @id 
-  createdAt DateTime @default(now())
-  email     String   @unique
-  full_name String
-  username  String @unique
-  avatar    String
-  password     String 
+  id          String      @id 
+  createdAt   DateTime    @default(now())
+  name        String 
+  author      String
+  pages       Pages[]
+  category    Categories  @relation(fields: [category_id],references: [id])
+  category_id String 
+  libraries   Library[]
 }
+
+model Categories{
+ id     String    @id 
+ name   String
+ books  Book[]
+}
+
+model Pages {
+  id        String      @id 
+  createdAt DateTime    @default(now())
+  content   String      @db.Text()
+  number    Int
+  book Book @relation(fields: [book_id], references: [id])
+  book_id   String
+}
+
 //@db.Text
