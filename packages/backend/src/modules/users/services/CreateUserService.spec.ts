@@ -16,18 +16,16 @@ describe('Create user ', () => {
 
     createUserService = new CreateUserService(usersRepository, fakeHashProvider)
   })
+
   test('user should create an account', async () => {
-    const pass = faker.internet.password({ length: 12 })
     const user = {
       full_name: faker.internet.displayName(),
       username: faker.internet.userName(),
       email: faker.internet.email(),
-      password: pass,
+      password: faker.internet.password({ length: 12 }),
     }
 
     const response = await createUserService.execute(user)
-
-    expect(response.password).toBe(`${pass}2413sd9aijh92903-54rs=a@@ds9`)
 
     expect(response).toHaveProperty('id')
   })
@@ -43,10 +41,9 @@ describe('Create user ', () => {
       password: faker.internet.password({ length: 7 }),
     }
 
-    await expect(createUserService.execute(user)).rejects.toBeInstanceOf(
-      AppError
-    )
+    await expect(createUserService.execute(user)).rejects.toBeInstanceOf(AppError)
   })
+
   test('user should not able to create an account with an non password at least 8 characters long', async () => {
     const user = {
       full_name: faker.internet.displayName(),
@@ -54,8 +51,17 @@ describe('Create user ', () => {
       email: faker.internet.email(),
       password: faker.internet.password({ length: 7 }),
     }
-    await expect(createUserService.execute(user)).rejects.toBeInstanceOf(
-      AppError
-    )
+    await expect(createUserService.execute(user)).rejects.toBeInstanceOf(AppError)
+  })
+
+  test('user should not able to create an account with an existent username ', async () => {
+    const user = {
+      full_name: faker.internet.displayName(),
+      username: 'ballistc',
+      email: faker.internet.email(),
+      password: faker.internet.password({ length: 12 }),
+    }
+
+    await expect(createUserService.execute(user)).rejects.toBeInstanceOf(AppError)
   })
 })

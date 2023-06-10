@@ -1,7 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
-import { User } from '../entities/User'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { AppError } from '@shared/errors/AppError'
 
@@ -13,30 +12,18 @@ export class CreateUserService {
     @inject('HashProvider')
     private hashProvider: IHashProvider
   ) {}
-  async execute(
-    user: Omit<ICreateUserDTO, 'id'>
-  ): Promise<Partial<ICreateUserDTO>> {
+  async execute(user: ICreateUserDTO): Promise<void> {
     const userAlreadyExists = await this.usersRepository.findByEmail(user.email)
+    const usernameAlreadyTaken = await this.usersRepository.findByUsername(user.username)
 
-    if (userAlreadyExists) throw new AppError('user already exists!')
+    if (userAlreadyExists) throw new AppError('Already have user registered with this email', 409)
 
-    if (user.password.length < 8)
-      throw new AppError('Password must have at least 8 caracteries', 409)
+    if (usernameAlreadyTaken) throw new AppError('Username already taken!', 409)
 
     const hashedPassword = await this.hashProvider.hashPassword(user.password)
 
-    const createdUser = new User({
-      email: user.email,
-      full_name: user.full_name,
-      username: user.username,
-      password: hashedPassword,
-    })
+    user.password = hashedPassword
 
-    const response: Partial<ICreateUserDTO> =
-      await this.usersRepository.createUser(createdUser)
-
-    delete response['password']
-
-    return response
+    await this.usersRepository.createUser(user)
   }
 }

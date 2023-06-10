@@ -1,8 +1,6 @@
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
+import { prisma } from 'lib/prisma'
 import { IUsersRepository } from '../IUsersRepository'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
 
 export class UsersImplementation implements IUsersRepository {
   async createUser(user: ICreateUserDTO): Promise<ICreateUserDTO> {
@@ -10,13 +8,23 @@ export class UsersImplementation implements IUsersRepository {
       data: {
         full_name: user.full_name,
         username: user.username,
-        id: user.id,
         email: user.email,
         password: user.password,
       },
     })
     return response
   }
+
+  async findByUsername(username: string): Promise<ICreateUserDTO | undefined> {
+    const response = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    })
+
+    if (response) return response
+  }
+
   async findByEmail(email: string): Promise<ICreateUserDTO | undefined> {
     const response = await prisma.user.findUnique({
       where: {

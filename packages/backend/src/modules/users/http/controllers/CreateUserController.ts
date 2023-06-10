@@ -1,8 +1,12 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { CreateUserService } from '../../services/CreateUserService'
-import zod from 'zod'
+import zod, { ZodIssue } from 'zod'
 import { AppError } from '@shared/errors/AppError'
+
+class ZodError2 extends Error {
+  issues: ZodIssue[]
+}
 
 export class CreateUserController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
@@ -10,7 +14,7 @@ export class CreateUserController {
       full_name: zod.string(),
       username: zod.string(),
       email: zod.string().email(),
-      password: zod.string(),
+      password: zod.string().min(8, 'Password must have at least 8 caracteries'),
     })
 
     const createUser = container.resolve(CreateUserService)
@@ -21,12 +25,19 @@ export class CreateUserController {
 
     try {
       inputUser = requestSchema.parse(request.body)
-    } catch {
-      throw new AppError('invalid fields', 409)
+    } catch (err) {
+      if (err instanceof zod.ZodError) {
+        const errors: string[] = []
+        for (const error in err.issues) {
+          errors.push(err.issues[error].message)
+        }
+
+        throw new AppError(errors, 409)
+      }
     }
 
-    const user = await createUser.execute(inputUser)
+    await createUser.execute(inputUser)
 
-    reply.code(201).send(user)
+    reply.code(201).send()
   }
 }

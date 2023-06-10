@@ -15,9 +15,10 @@ export class FakeUserRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<ICreateUserDTO | undefined> {
     return await this.Users.find((user) => user.email === email)
   }
-  async createUser(
-    user: ICreateUserDTO
-  ): Promise<Omit<ICreateUserDTO, 'password'>> {
+  async findByUsername(username: string): Promise<ICreateUserDTO | undefined> {
+    return await this.Users.find((user) => user.username === username)
+  }
+  async createUser(user: ICreateUserDTO): Promise<ICreateUserDTO> {
     this.Users.push(user)
     return user
   }
