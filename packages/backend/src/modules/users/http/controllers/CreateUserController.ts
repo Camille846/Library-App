@@ -4,10 +4,6 @@ import { CreateUserService } from '../../services/CreateUserService'
 import zod, { ZodIssue } from 'zod'
 import { AppError } from '@shared/errors/AppError'
 
-class ZodError2 extends Error {
-  issues: ZodIssue[]
-}
-
 export class CreateUserController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const requestSchema = zod.object({
@@ -26,8 +22,8 @@ export class CreateUserController {
     try {
       inputUser = requestSchema.parse(request.body)
     } catch (err) {
+      const errors: string[] = []
       if (err instanceof zod.ZodError) {
-        const errors: string[] = []
         for (const error in err.issues) {
           errors.push(err.issues[error].message)
         }

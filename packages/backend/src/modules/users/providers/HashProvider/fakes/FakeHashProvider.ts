@@ -7,12 +7,10 @@ export class FakeHashProvider implements IHashProvider {
   async hashPassword(password: string): Promise<string> {
     return password + this.password
   }
-  async comparePasswords(
-    password: string,
-    storagedHashedPassword: string
-  ): Promise<void> {
-    if (this.password !== storagedHashedPassword) {
-      new AppError('Email or password incorrect', 401)
+  async comparePasswords(password: string, storagedHashedPassword: string): Promise<boolean> {
+    if (password !== storagedHashedPassword) {
+      return false
     }
+    return true
   }
 }

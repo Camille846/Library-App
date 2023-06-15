@@ -14,6 +14,7 @@ export class CreateUserService {
   ) {}
   async execute(user: ICreateUserDTO): Promise<void> {
     const userAlreadyExists = await this.usersRepository.findByEmail(user.email)
+
     const usernameAlreadyTaken = await this.usersRepository.findByUsername(user.username)
 
     if (userAlreadyExists) throw new AppError('Already have user registered with this email', 409)

@@ -8,9 +8,7 @@ export class HashProviderImplemention implements IHashProvider {
 
     return hashedPassword
   }
-  async comparePasswords(password: string, storagedHashedPassword: string): Promise<void> {
-    const compare = await bcrypt.compare(password, storagedHashedPassword)
-
-    if (!compare) throw new AppError('invalid credentials', 401)
+  async comparePasswords(password: string, storagedHashedPassword: string): Promise<boolean> {
+    return await bcrypt.compare(password, storagedHashedPassword)
   }
 }

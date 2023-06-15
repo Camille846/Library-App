@@ -1,10 +1,11 @@
 import { IUsersRepository } from '../IUsersRepository'
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
+import { User } from '@prisma/client'
 
 export class FakeUserRepository implements IUsersRepository {
   private Users: [ICreateUserDTO] = [
     {
-      id: 'ew9ftyuews7fgysd',
+      id: 'e9ufhgsed8fgsd8f7sd9hfio',
       username: 'ballistc',
       email: 'ballistc@email.com',
       full_name: 'Pedro Vitor',
