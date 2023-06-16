@@ -3,7 +3,4 @@ import { HashProviderImplemention } from './HashProvider/implementations/HashPro
 
 import { IHashProvider } from './HashProvider/models/IHashProvider'
 
-container.registerSingleton<IHashProvider>(
-  'HashProvider',
-  HashProviderImplemention
-)
+container.registerSingleton<IHashProvider>('HashProvider', HashProviderImplemention)

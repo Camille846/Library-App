@@ -5,6 +5,8 @@ import { AppError } from '@shared/errors/AppError'
 import { DiskImplementation } from '@shared/container/providers/StorageProvider/implementations/DiskImplementation'
 
 import { CreateUserController } from '@modules/users/http/controllers/CreateUserController'
+import { authenticate } from '@shared/infra/plugins/authenticate'
+import { AuthenticateUserController } from '../controllers/AuthenticateUserController'
 
 interface Request extends FastifyRequest {
   file?: {
@@ -13,6 +15,7 @@ interface Request extends FastifyRequest {
 }
 const diskImplementation = new DiskImplementation()
 const createUserController = new CreateUserController()
+const authenticateUserController = new AuthenticateUserController()
 
 export async function userRoutes(fastify: FastifyInstance) {
   await fastify.register(rateLimit, {
@@ -22,10 +25,16 @@ export async function userRoutes(fastify: FastifyInstance) {
 
   fastify.route({
     method: 'POST',
+    url: '/login',
+    handler: authenticateUserController.handle,
+  })
+
+  fastify.route({
+    method: 'POST',
     url: '/profile',
-    preHandler: upload.single('avatar'),
+    preHandler: authenticate,
     handler: async function (request: Request, reply: FastifyReply) {
-      diskImplementation.saveFile(request.file?.filename ?? 'avatar')
+      //diskImplementation.saveFile(request.file?.filename ?? 'avatar')
       reply.code(200).send()
     },
   })
@@ -33,7 +42,6 @@ export async function userRoutes(fastify: FastifyInstance) {
   fastify.route({
     method: 'POST',
     url: '/new',
-    preHandler: upload.single('avatar'),
     handler: createUserController.handle,
   })
 }

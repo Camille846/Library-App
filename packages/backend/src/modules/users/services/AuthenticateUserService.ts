@@ -23,9 +23,14 @@ export class AuthenticateUserService {
 
     if (!user) throw new AppError('Invalid Credentials!', 401)
 
+    const notSocialLogin = user.federatedCredentials.find((fed) => fed.provider === 'ApplicationLogin')
+
+    if (!notSocialLogin) throw new AppError('Login with google/facebook or reset password!', 403)
+
     const passMatchs = await this.hashProvider.comparePasswords(password, user.password)
 
     if (!passMatchs) throw new AppError('Invalid Credentials!', 401)
+
     const { secret, expiresIn } = authSettings.jwt
 
     const token = await sign({}, secret, { subject: user.id, expiresIn })

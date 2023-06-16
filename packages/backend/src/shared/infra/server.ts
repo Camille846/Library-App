@@ -14,6 +14,7 @@ const fastify = Fastify({
 })
 
 async function rateLimit() {
+  await fastify.register(import('@fastify/middie'))
   await fastify.register(import('@fastify/rate-limit'), {
     max: 100,
     timeWindow: '1 minute',

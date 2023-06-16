@@ -11,14 +11,22 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  email     String    @unique
-  full_name String
-  username  String    @unique
-  avatar    String?
-  password  String
-  libraries Library[]
+  id                   String                 @id @default(uuid())
+  createdAt            DateTime               @default(now())
+  email                String                 @unique
+  full_name            String
+  username             String                 @unique
+  avatar               String?
+  password             String
+  libraries            Library[]
+  federatedCredentials FederatedCredentials[]
+}
+
+model FederatedCredentials {
+  id       String   @id @default(uuid())
+  provider Provider @default(ApplicationLogin)
+  user     User     @relation(fields: [user_id], references: [id])
+  user_id  String
 }
 
 model Library {
@@ -56,4 +64,8 @@ model Pages {
   book_id   String
 }
 
-//@db.Text
+enum Provider {
+  Facebook
+  Google
+  ApplicationLogin
+}

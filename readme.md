@@ -17,18 +17,18 @@ Aplicativo de Biblioteca Digital pessoal que permite ao usuário criar uma bibli
 
 # RFs (REQUISITOS FUNCIONAIS)
 
-- [ ] O sistema deve permitir criar uma conta
-- [ ] O sistema deve permitir autenticação do usuário.
-- [ ] O sistema deve permitir consulta de livros pelo usuário
-- [ ] O sistema deve permitir adição de livros em bibliotecas pelo usuário
-- [ ] O sistema deve permitir remoção de livros de bilbiotecas pelo usuário
-- [ ] O sistema deve permitir criação de bibliotecas pelo usuário
-- [ ] O sistema deve permitir compartilhamento de biblioteca entre usuários.
+- [ X ] O sistema deve permitir criar uma conta
+- [ X ] O sistema deve permitir autenticação do usuário.
+- [  ] O sistema deve permitir consulta de livros pelo usuário
+- [  ] O sistema deve permitir adição de livros em bibliotecas pelo usuário
+- [  ] O sistema deve permitir remoção de livros de bilbiotecas pelo usuário
+- [  ] O sistema deve permitir criação de bibliotecas pelo usuário
+- [  ] O sistema deve permitir compartilhamento de biblioteca entre usuários.
 
 # RN (REGRA DE NEGOCIO)
-- [ ] O sistema não permite criação de conta com o mesmo email. 
-- [ ] O sistema não permite criação de conta com o mesmo nome de usuário. 
-- [ ] É necessário que o usuário crie senha com mínimo de 8 caracteres para criação de usuário.
+- [ X ] O sistema não permite criação de conta com o mesmo email. 
+- [ X ] O sistema não permite criação de conta com o mesmo nome de usuário. 
+- [ X ] É necessário que o usuário crie senha com mínimo de 8 caracteres para criação de usuário.
 
 # RNFs (REQUISITOS NÃO FUNCIONAIS)
 - [ ] O sistema permite autenticar com Google e Facebook

@@ -1,5 +1,6 @@
 import 'reflect-metadata'
-
+import { faker } from '@faker-js/faker'
+import { AppError } from '../../../shared/errors/AppError'
 import { FakeHashProvider } from '../providers/HashProvider/fakes/FakeHashProvider'
 import { FakeUserRepository } from '../repositories/Fakes/FakeUserRepository'
 import { AuthenticateUserService } from '../services/AuthenticateUserService'
@@ -23,5 +24,13 @@ describe('Create user ', () => {
     const response = await authenticateUserService.execute(user)
 
     expect(response).toHaveProperty('token')
+  })
+  test('user should not able to login with invalid credentials', async () => {
+    const user = {
+      email: 'ballistc@email.com',
+      password: String(faker.internet.password),
+    }
+
+    await expect(authenticateUserService.execute(user)).rejects.toBeInstanceOf(AppError)
   })
 })
