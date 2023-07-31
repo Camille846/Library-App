@@ -1,0 +1,50 @@
+Arguments: 
+  /home/ballistc/.nvm/versions/node/v18.16.1/bin/node /home/ballistc/.nvm/versions/node/v18.16.1/bin/yarn add typescript -DW
+
+PATH: 
+  /opt/gradle/gradle-7.4.2/bin:/home/ballistc/.nvm/versions/node/v18.16.1/bin:/home/ballistc/.vscode-server/bin/2ccd690cbff1569e4a83d7c43d45101f817401dc/bin/remote-cli:/bin:/home/ballistc/.nvm/versions/node/v18.16.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_1.2.5.0_x64__8wekyb3d8bbwe:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/PuTTY/:/mnt/c/Users/pedri/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/pedri/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin:/home/ballistc/.nexustools:/usr/lib/jvm/java-11-openjdk-amd64/bin:/home/ballistc/Android/emulator:/home/ballistc/Android/tools:/home/ballistc/Android/tools/bin:/home/ballistc/Android/platform-tools:/usr/lib/jvm/java-11-openjdk-amd64/bin:/home/ballistc/Android/emulator:/home/ballistc/Android/tools:/home/ballistc/Android/tools/bin:/home/ballistc/Android/platform-tools
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.16.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@Library%2feslint-config: Not found
+      at params.callback [as _callback] (/home/ballistc/.nvm/versions/node/v18.16.1/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at self.callback (/home/ballistc/.nvm/versions/node/v18.16.1/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/home/ballistc/.nvm/versions/node/v18.16.1/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/home/ballistc/.nvm/versions/node/v18.16.1/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+npm manifest: 
+  {
+    "name": "Library",
+    "version": "1.0.0",
+    "workspaces": {
+      "packages": ["packages/mobile"]
+    },
+    "devDependencies": {
+      "@Library/eslint-config":"*"
+    },
+    "lint-staged": {
+      "*.ts": "eslint --fix"
+    },
+    "license": "MIT",
+     "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

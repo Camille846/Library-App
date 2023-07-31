@@ -1,0 +1,26 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "test": "yarn workspaces run test"
+  },
+  "devDependencies": {
+    "@library/eslint-config": "*",
+    "@types/jest": "^29.5.3",
+    "husky": "^8.0.3",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "4.9.4"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
+  "license": "MIT",
+  "private": true
+}
