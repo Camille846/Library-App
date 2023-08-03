@@ -2,7 +2,16 @@
   "expo": {
     "splash": {
       "image": "./assets/splash.png",
-       "resizeMode": "cover"
+      "resizeMode": "cover"
+    },
+    "name": "library App",
+    "slug": "libraryapp",
+    "scheme": "libraryapp",
+    "android": {
+      "package": "com.ballistc.libraryapp"
+    },
+    "ios": {
+      "bundleIdentifier": "com.ballistc.libraryapp"
     }
   }
 }

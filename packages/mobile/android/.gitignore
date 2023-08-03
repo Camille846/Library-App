@@ -1,0 +1,15 @@
+# OSX
+#
+.DS_Store
+
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+credentials.json
+# Bundle artifacts
+*.jsbundle
