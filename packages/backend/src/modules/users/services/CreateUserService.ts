@@ -3,6 +3,7 @@ import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { AppError } from '@shared/errors/AppError'
+import { IJWTProvider } from '../providers/JWTProvider/models/IJWTProvider'
 
 @injectable()
 export class CreateUserService {
@@ -10,9 +11,11 @@ export class CreateUserService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
     @inject('HashProvider')
-    private hashProvider: IHashProvider
+    private hashProvider: IHashProvider,
+    @inject('JWTProvider')
+    private jwtProvider: IJWTProvider
   ) {}
-  async execute(user: ICreateUserDTO): Promise<void> {
+  async execute(user: ICreateUserDTO): Promise<string> {
     const userAlreadyExists = await this.usersRepository.findByEmail(user.email)
 
     const usernameAlreadyTaken = await this.usersRepository.findByUsername(user.username)
@@ -25,6 +28,10 @@ export class CreateUserService {
 
     user.password = hashedPassword
 
-    await this.usersRepository.createUser(user)
+    const createdUser = await this.usersRepository.createUser(user)
+
+    const token = await this.jwtProvider.sign(createdUser.id)
+
+    return token
   }
 }

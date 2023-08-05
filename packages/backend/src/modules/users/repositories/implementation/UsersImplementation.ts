@@ -1,15 +1,11 @@
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 import { FederatedCredentials, User } from '@prisma/client'
 import { prisma } from 'lib/prisma'
-import { IUsersRepository } from '../IUsersRepository'
-
-interface ICreateUserDTOResponse extends ICreateUserDTO {
-  federatedCredentials: []
-}
+import { IUsersRepository, UserAuthInput } from '../IUsersRepository'
 
 export class UsersImplementation implements IUsersRepository {
-  async createUser(user: ICreateUserDTO): Promise<ICreateUserDTO> {
-    const response = await prisma.user.create({
+  async createUser(user: ICreateUserDTO): Promise<User> {
+    return await prisma.user.create({
       data: {
         full_name: user.full_name,
         username: user.username,
@@ -20,7 +16,6 @@ export class UsersImplementation implements IUsersRepository {
         },
       },
     })
-    return response
   }
 
   async findByUsername(username: string): Promise<ICreateUserDTO | undefined> {
@@ -33,7 +28,7 @@ export class UsersImplementation implements IUsersRepository {
       },
     })
     console.log(response)
-    if (response) return response
+    if (response) return response as ICreateUserDTO
   }
 
   async findByEmail(email: string): Promise<(User & { federatedCredentials: FederatedCredentials[] }) | undefined> {
@@ -49,5 +44,20 @@ export class UsersImplementation implements IUsersRepository {
     // response?.federatedCredentials.find((fed) => fed.provider === 'ApplicationLogin')
 
     if (response) return response
+  }
+  async createUserOAuth(user: UserAuthInput): Promise<void> {
+    await prisma.user.create({
+      data: {
+        email: user.email,
+        full_name: user.full_name,
+        username: user.email.split('@')[0],
+        avatar: user.picture,
+        federatedCredentials: {
+          create: {
+            provider: user.provider,
+          },
+        },
+      },
+    })
   }
 }

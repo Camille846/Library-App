@@ -32,8 +32,8 @@ export class CreateUserController {
       }
     }
 
-    await createUser.execute(inputUser)
+    const token = await createUser.execute(inputUser)
 
-    reply.code(201).send()
+    reply.code(201).send({ token })
   }
 }

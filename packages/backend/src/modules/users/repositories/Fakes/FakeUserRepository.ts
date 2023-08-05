@@ -1,4 +1,4 @@
-import { IUsersRepository } from '../IUsersRepository'
+import { IUsersRepository, UserAuthInput } from '../IUsersRepository'
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 import { FederatedCredentials, User } from '@prisma/client'
 
@@ -20,9 +20,9 @@ export class FakeUserRepository implements IUsersRepository {
     return await this.Users.find((user) => user.email === email)
   }
   async findByUsername(username: string): Promise<ICreateUserDTO | undefined> {
-    return await this.Users.find((user) => user.username === username)
+    return (await this.Users.find((user) => user.username === username)) as ICreateUserDTO
   }
-  async createUser(user: ICreateUserDTO): Promise<ICreateUserDTO> {
+  async createUser(user: ICreateUserDTO): Promise<void> {
     this.Users.push({
       id: '2ew',
       avatar: 'sds',
@@ -30,6 +30,9 @@ export class FakeUserRepository implements IUsersRepository {
       federatedCredentials: [],
       ...user,
     })
-    return user
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async createUserOAuth(user: UserAuthInput): Promise<void> {
+    console.log('method not implemented')
   }
 }

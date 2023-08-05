@@ -17,7 +17,7 @@ model User {
   full_name            String
   username             String                 @unique
   avatar               String?
-  password             String
+  password             String?
   libraries            Library[]
   federatedCredentials FederatedCredentials[]
 }

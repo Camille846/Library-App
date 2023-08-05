@@ -7,6 +7,7 @@ import { DiskImplementation } from '@shared/container/providers/StorageProvider/
 import { CreateUserController } from '@modules/users/http/controllers/CreateUserController'
 import { authenticate } from '@shared/infra/plugins/authenticate'
 import { AuthenticateUserController } from '../controllers/AuthenticateUserController'
+import { OAuthGoogleController } from '../controllers/OAuthGoogleController'
 
 interface Request extends FastifyRequest {
   file?: {
@@ -16,6 +17,7 @@ interface Request extends FastifyRequest {
 const diskImplementation = new DiskImplementation()
 const createUserController = new CreateUserController()
 const authenticateUserController = new AuthenticateUserController()
+const oauthGoogleController = new OAuthGoogleController()
 
 export async function userRoutes(fastify: FastifyInstance) {
   await fastify.register(rateLimit, {
@@ -23,25 +25,10 @@ export async function userRoutes(fastify: FastifyInstance) {
     timeWindow: '1 minute',
   })
 
-  fastify.route({
-    method: 'POST',
-    url: '/login',
-    handler: authenticateUserController.handle,
-  })
-
-  fastify.route({
-    method: 'POST',
-    url: '/profile',
-    preHandler: authenticate,
-    handler: async function (request: Request, reply: FastifyReply) {
-      //diskImplementation.saveFile(request.file?.filename ?? 'avatar')
-      reply.code(200).send()
-    },
-  })
-
-  fastify.route({
-    method: 'POST',
-    url: '/new',
-    handler: createUserController.handle,
+  fastify.post('/login', authenticateUserController.handle)
+  fastify.post('/oauth/google', oauthGoogleController.handle)
+  fastify.post('/new', createUserController.handle)
+  fastify.get('/hello', (res, reply) => {
+    reply.status(200).send({ ok: true })
   })
 }

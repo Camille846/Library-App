@@ -6,4 +6,4 @@ import { ILibrariesRepository } from '@modules/libraries/repositories/ILibraries
 import { LibraryRepositoryImplementation } from '@modules/libraries/repositories/implementations/LibraryRepositoryImplementantion'
 
 container.registerSingleton<IUsersRepository>('UsersRepository', UsersImplementation)
-container.registerSingleton<ILibrariesRepository>('LibrariesRepository', LibraryRepositoryImplementation)
+//container.registerSingleton<ILibrariesRepository>('LibrariesRepository', LibraryRepositoryImplementation)

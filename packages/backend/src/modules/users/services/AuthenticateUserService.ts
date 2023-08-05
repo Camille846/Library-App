@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { IUsersRepository } from '../repositories/IUsersRepository'
 import authSettings from '@config/auth'
+import { IJWTProvider } from '../providers/JWTProvider/models/IJWTProvider'
 
 interface IRequest {
   email: string
@@ -16,7 +17,14 @@ interface IResponse {
 
 @injectable()
 export class AuthenticateUserService {
-  constructor(@inject('UsersRepository') private userRepository: IUsersRepository, @inject('HashProvider') private hashProvider: IHashProvider) {}
+  constructor(
+    @inject('UsersRepository')
+    private userRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+    @inject('JWTProvider')
+    private jwtProvider: IJWTProvider
+  ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.findByEmail(email)
@@ -27,13 +35,12 @@ export class AuthenticateUserService {
 
     if (!notSocialLogin) throw new AppError('Login with google/facebook or reset password!', 403)
 
-    const passMatchs = await this.hashProvider.comparePasswords(password, user.password)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const passMatchs = await this.hashProvider.comparePasswords(password, user.password!)
 
     if (!passMatchs) throw new AppError('Invalid Credentials!', 401)
 
-    const { secret, expiresIn } = authSettings.jwt
-
-    const token = await sign({}, secret, { subject: user.id, expiresIn })
+    const token = (await this.jwtProvider.sign(user.id)) as string
 
     return { token }
   }

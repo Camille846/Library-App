@@ -4,6 +4,7 @@ declare global {
       DATABASE_URL: string
       BASE_URL: string
       JWT_SECRET: string
+      GOOGLE_CLIENT_ID: string
     }
   }
 }

@@ -1,10 +1,12 @@
-import { FastifyMiddieOptions, NextFunction } from '@fastify/middie'
-import { verify, JsonWebTokenError } from 'jsonwebtoken'
-import authSettings from '@config/auth'
+import { NextFunction } from '@fastify/middie'
+import { JsonWebTokenError } from 'jsonwebtoken'
 import { AppError } from '@shared/errors/AppError'
+import { JWTProvider } from '@modules/users/providers/JWTProvider/JWTProvider'
+import { FastifyReply, FastifyRequest } from 'fastify'
 
-export async function authenticate(req: any, res: any, next: NextFunction) {
-  const { secret } = authSettings.jwt
+const jwtProvider = new JWTProvider()
+
+export async function authenticate(req: FastifyRequest, reply: FastifyReply, next: NextFunction) {
   const { authorization } = req.headers
 
   if (!authorization) throw new AppError('Missing token', 401)
@@ -12,9 +14,9 @@ export async function authenticate(req: any, res: any, next: NextFunction) {
   const access_token = authorization.split(' ')[1]
 
   try {
-    const token = await verify(access_token, secret)
+    const token = await jwtProvider.verify(access_token)
 
-    req.userId = token.sub
+    req.userId = token.sub as string
 
     next()
   } catch (error) {
