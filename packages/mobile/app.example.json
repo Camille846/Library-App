@@ -19,10 +19,10 @@
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
         "SKAdNetworkItems": [
           {
-            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+            "SKAdNetworkIdentifier": ""
           },
           {
-            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+            "SKAdNetworkIdentifier": ""
           }
         ]
       }
@@ -31,10 +31,10 @@
       [
         "react-native-fbsdk-next",
         {
-          "appID": "961283411760539",
-          "clientToken": "7affab29235c5e21c60c2702adc0e9c3",
-          "displayName": "Library App",
-          "scheme": "fb694534725830375",
+          "appID": "",
+          "clientToken": "",
+          "displayName": "",
+          "scheme": "",
           "advertiserIDCollectionEnabled": true,
           "autoLogAppEventsEnabled": true,
           "isAutoInitEnabled": true,
@@ -45,7 +45,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "8eaf5fb8-249b-4cb3-ac01-620ab4fe46a4"
+        "projectId": ""
       }
     }
   }

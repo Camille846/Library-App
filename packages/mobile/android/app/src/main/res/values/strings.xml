@@ -2,4 +2,8 @@
   <string name="app_name">library App</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">cover</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+  <string name="facebook_app_id">961283411760539</string>
+  <string name="facebook_client_token">7affab29235c5e21c60c2702adc0e9c3</string>
+  <string name="server_client_id">865455555870-amhon2rgg33abqlnb1ctek3j8lhkjdhf.apps.googleusercontent.com</string>
+  <string name="fb_login_protocol_scheme">fb694534725830375</string>
 </resources>
