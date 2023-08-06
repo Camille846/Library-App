@@ -5,7 +5,11 @@ import Home from '../screens/Home'
 import { Profile } from '../screens/Profile'
 import Signin from '../screens/Signin'
 import Signup from '../screens/Signup'
-
+import { useSelector } from 'react-redux'
+//import { isAuth } from '../store/auth/slice'
+import { AppRoutes } from './app.routes'
+import { AuthRoutes } from './auth.routes'
+import { RootState } from '../store'
 const Stack = createNativeStackNavigator()
 
 const Linking = {
@@ -26,18 +30,7 @@ const Linking = {
 }
 
 export const Routes = () => {
-  return (
-    <NavigationContainer linking={Linking}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='Signin' component={Signin} />
-        <Stack.Screen name='Signup' component={Signup} />
-        <Stack.Screen name='Profile' component={Profile} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+  const isLogged = useSelector((state: RootState) => state.persitedReducer.auth.isAuth)
+
+  return isLogged ? <AppRoutes /> : <AuthRoutes />
 }

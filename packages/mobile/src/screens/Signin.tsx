@@ -7,24 +7,16 @@ import * as zod from 'zod'
 import books from '../../assets/books.png'
 import google from '../../assets/google.png'
 import facebook from '../../assets/facebook.png'
-import { supabase } from '../lib/supabase'
-import { createURL, useURL } from 'expo-linking'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
-import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk-next'
-import { googleConfig } from '../config/google'
 
-GoogleSignin.configure({
-  scopes: [], // what API you want to access on behalf of the user, default is email and profile
-  webClientId: googleConfig.clientId, // client ID of type WEB for your server (needed to verify user ID and offline access)
-  offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  hostedDomain: '', // specifies a hosted domain restriction
-  forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-  //accountName: '', // [Android] specifies an account name on the device that should be used
-  //iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-  //googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
-  //openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
-  //profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-})
+import { GoogleSignInConfig } from '../config/google'
+
+import { useDispatch } from 'react-redux'
+import { signInWithGoogle } from '../store/auth/thunks'
+import { AppDispatch } from '../store'
+
+GoogleSignInConfig
+
 const Signin: React.FC = () => {
   const signInSchema = zod.object({
     email: zod.string({ required_error: 'Você deve informar um email válido!' }).email('Você deve informar um email válido!').min(1),
@@ -32,11 +24,8 @@ const Signin: React.FC = () => {
   })
   type IsignIn = zod.infer<typeof signInSchema>
 
-  const url = createURL('home', {})
-  const redirectUrl = useURL()
-  console.log(redirectUrl)
+  const dispatch = useDispatch<AppDispatch>()
 
-  console.log(url)
   const {
     control,
     handleSubmit,
@@ -49,12 +38,14 @@ const Signin: React.FC = () => {
 
   async function handleSignInWithGoogle() {
     await GoogleSignin.hasPlayServices()
+
     const userInfo = await GoogleSignin.signIn()
-    console.log(userInfo)
-    //setState({ userInfo })
+    const { idToken } = userInfo
+
+    dispatch(signInWithGoogle({ idToken }))
   }
 
-  async function handleSignInWithFacebook() {
+  /*async function handleSignInWithFacebook() {
     LoginManager.logInWithPermissions(['public_profile']).then(
       function (result) {
         if (result.isCancelled) {
@@ -67,7 +58,7 @@ const Signin: React.FC = () => {
         console.log('Login fail with error: ' + error)
       }
     )
-  }
+  }*/
   return (
     <SafeAreaView className='flex bg-[#6C85D7] flex-1'>
       <View className='flex items-center'>
@@ -119,7 +110,7 @@ const Signin: React.FC = () => {
             <TouchableOpacity onPress={handleSignInWithGoogle}>
               <Image className='w-12 h-12' source={google} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSignInWithFacebook}>
+            <TouchableOpacity>
               <Image className='w-12 h-12' source={facebook} />
             </TouchableOpacity>
           </View>

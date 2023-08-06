@@ -1,10 +1,17 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux'
+import { signInWithGoogle2 } from '../store/auth/slice'
 
 export const Profile: React.FC = () => {
+  const dispatch = useDispatch()
+
   return (
-    <View>
-      <Text>Profile</Text>
-    </View>
+    <SafeAreaView>
+      <TouchableOpacity onPress={() => dispatch(signInWithGoogle2())}>
+        <Text>Profile</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   )
 }

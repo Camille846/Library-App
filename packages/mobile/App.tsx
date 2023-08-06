@@ -4,6 +4,8 @@ import { Routes } from './src/routes'
 import { useCallback, useEffect, useState } from 'react'
 import { useFonts } from './src/hooks/useFonts'
 import { View, Text } from 'react-native'
+import { Provider } from 'react-redux'
+import { store } from './src/store'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -36,10 +38,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <Provider store={store}>
       <View onLayout={onLayoutRootView}></View>
       <StatusBar style='light' />
       <Routes />
-    </>
+    </Provider>
   )
 }
