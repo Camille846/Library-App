@@ -3,9 +3,10 @@ import * as SplashScreen from 'expo-splash-screen'
 import { Routes } from './src/routes'
 import { useCallback, useEffect, useState } from 'react'
 import { useFonts } from './src/hooks/useFonts'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { Provider } from 'react-redux'
-import { store } from './src/store'
+import { persistor, store } from './src/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -39,9 +40,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <View onLayout={onLayoutRootView}></View>
-      <StatusBar style='light' />
-      <Routes />
+      <PersistGate persistor={persistor}>
+        <View onLayout={onLayoutRootView}></View>
+        <StatusBar style='light' />
+        <Routes />
+      </PersistGate>
     </Provider>
   )
 }

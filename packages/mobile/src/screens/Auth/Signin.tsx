@@ -4,16 +4,16 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
-import books from '../../assets/books.png'
-import google from '../../assets/google.png'
-import facebook from '../../assets/facebook.png'
+import books from '../../../assets/books.png'
+import google from '../../../assets/google.png'
+import facebook from '../../../assets/facebook.png'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
 
-import { GoogleSignInConfig } from '../config/google'
+import { GoogleSignInConfig } from '../../config/google'
 
 import { useDispatch } from 'react-redux'
-import { signInWithGoogle } from '../store/auth/thunks'
-import { AppDispatch } from '../store'
+import { signInWithEmailAndPassword, signInWithGoogle } from '../../store/auth/thunks'
+import { AppDispatch } from '../../store'
 
 GoogleSignInConfig
 
@@ -33,16 +33,19 @@ const Signin: React.FC = () => {
   } = useForm<IsignIn>({ resolver: zodResolver(signInSchema) })
 
   function handleSignIn(data: IsignIn) {
-    console.log(data)
+    dispatch(signInWithEmailAndPassword(data))
   }
 
   async function handleSignInWithGoogle() {
-    await GoogleSignin.hasPlayServices()
+    try {
+      await GoogleSignin.hasPlayServices()
 
-    const userInfo = await GoogleSignin.signIn()
-    const { idToken } = userInfo
-
-    dispatch(signInWithGoogle({ idToken }))
+      const userInfo = await GoogleSignin.signIn()
+      const { idToken } = userInfo
+      if (idToken) dispatch(signInWithGoogle({ idToken }))
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   /*async function handleSignInWithFacebook() {
@@ -127,6 +130,3 @@ const Signin: React.FC = () => {
 }
 
 export default Signin
-function setState(arg0: { userInfo: import('@react-native-google-signin/google-signin').User }) {
-  throw new Error('Function not implemented.')
-}

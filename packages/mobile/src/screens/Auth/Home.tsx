@@ -1,14 +1,14 @@
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import library from '../../assets/library.png'
+import library from '../../../assets/library.png'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 interface IHomeProps {
   navigation: NativeStackNavigationProp<any, any>
 }
 
-const Home: React.FC<IHomeProps> = ({ navigation }) => {
+export const Home: React.FC<IHomeProps> = ({ navigation }) => {
   return (
     <SafeAreaView className='bg-[#6C85D7] flex flex-1'>
       <View className='mt-36 w-full p-2 flex items-center z-2'>
@@ -29,5 +29,3 @@ const Home: React.FC<IHomeProps> = ({ navigation }) => {
     </SafeAreaView>
   )
 }
-
-export default Home

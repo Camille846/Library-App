@@ -3,9 +3,9 @@ import { View, Text, Image, TextInput, TouchableOpacity, ScrollView } from 'reac
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Controller, useForm } from 'react-hook-form'
 
-import books from '../../assets/books.png'
-import google from '../../assets/google.png'
-import facebook from '../../assets/facebook.png'
+import books from '../../../assets/books.png'
+import google from '../../../assets/google.png'
+import facebook from '../../../assets/facebook.png'
 
 const Signup: React.FC = () => {
   const { control, handleSubmit } = useForm()
