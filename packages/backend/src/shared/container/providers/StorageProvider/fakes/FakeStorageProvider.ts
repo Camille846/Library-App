@@ -8,9 +8,7 @@ export class FakeStorageProvider implements IStorageProvider {
     return file
   }
   async deleteFile(file: string): Promise<void> {
-    const findIndex = this.storage.findIndex(
-      (storageFile) => storageFile === file
-    )
+    const findIndex = this.storage.findIndex((storageFile) => storageFile === file)
 
     this.storage.splice(findIndex, 1)
   }

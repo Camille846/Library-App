@@ -1,4 +1,4 @@
-import { Jwt, JwtPayload, sign, verify } from 'jsonwebtoken'
+import { JwtPayload, sign, verify } from 'jsonwebtoken'
 import { IJWTProvider } from './models/IJWTProvider'
 import authSettings from '@config/auth'
 

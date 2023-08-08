@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Profile } from '../../screens/App/Profile'
-import { TouchableOpacity, Text, View, Image } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
 import { Home } from '../../screens/App/Home'
 import { LibraryAddIcon } from '../../components/LibraryAddIcon'

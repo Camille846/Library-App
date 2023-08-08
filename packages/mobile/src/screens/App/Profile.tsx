@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
-import { signInWithGoogle2, signOut } from '../../store/auth/slice'
+import { signOut } from '../../store/auth/slice'
 import { api } from '../../services/axios'
 
 export const Profile: React.FC = () => {

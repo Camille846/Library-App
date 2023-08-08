@@ -1,4 +1,4 @@
-import { Jwt, JwtPayload } from 'jsonwebtoken'
+import { JwtPayload } from 'jsonwebtoken'
 
 export interface IJWTProvider {
   sign(userId: string): Promise<string>

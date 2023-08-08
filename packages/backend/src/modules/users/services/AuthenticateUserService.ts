@@ -1,9 +1,7 @@
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import { sign } from 'jsonwebtoken'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { IUsersRepository } from '../repositories/IUsersRepository'
-import authSettings from '@config/auth'
 import { IJWTProvider } from '../providers/JWTProvider/models/IJWTProvider'
 
 interface IRequest {

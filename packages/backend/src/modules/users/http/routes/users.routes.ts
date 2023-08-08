@@ -1,11 +1,8 @@
-import { upload } from '@utils/multer'
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance, FastifyRequest } from 'fastify'
 import rateLimit from '@fastify/rate-limit'
-import { AppError } from '@shared/errors/AppError'
 import { DiskImplementation } from '@shared/container/providers/StorageProvider/implementations/DiskImplementation'
 
 import { CreateUserController } from '@modules/users/http/controllers/CreateUserController'
-import { authenticate } from '@shared/infra/plugins/authenticate'
 import { AuthenticateUserController } from '../controllers/AuthenticateUserController'
 import { OAuthGoogleController } from '../controllers/OAuthGoogleController'
 

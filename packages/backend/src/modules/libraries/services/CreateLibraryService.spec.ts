@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import { faker } from '@faker-js/faker'
-import { AppError } from '../../../shared/errors/AppError'
 import { CreateLibraryService } from './CreateLibraryService'
 import { FakeLibraryRepository } from '../repositories/fakes/FakeLibraryRepository'
 

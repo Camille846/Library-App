@@ -1,6 +1,5 @@
 import { IHashProvider } from '../models/IHashProvider'
 import bcrypt from 'bcrypt'
-import { AppError } from '@shared/errors/AppError'
 
 export class HashProviderImplemention implements IHashProvider {
   async hashPassword(password: string): Promise<string> {

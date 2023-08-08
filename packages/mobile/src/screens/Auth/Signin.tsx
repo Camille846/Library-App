@@ -7,7 +7,7 @@ import * as zod from 'zod'
 import books from '../../../assets/books.png'
 import google from '../../../assets/google.png'
 import facebook from '../../../assets/facebook.png'
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 import { GoogleSignInConfig } from '../../config/google'
 

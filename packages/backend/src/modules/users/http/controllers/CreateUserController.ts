@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import { CreateUserService } from '../../services/CreateUserService'
-import zod, { ZodIssue } from 'zod'
+import zod from 'zod'
 import { AppError } from '@shared/errors/AppError'
 
 export class CreateUserController {
