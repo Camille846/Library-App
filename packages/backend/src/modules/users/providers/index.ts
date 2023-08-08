@@ -7,4 +7,4 @@ import { IJWTProvider } from './JWTProvider/models/IJWTProvider'
 
 container.registerSingleton<IHashProvider>('HashProvider', HashProviderImplemention)
 
-container.registerSingleton<IJWTProvider>('HashProvider', JWTProvider)
+container.registerSingleton<IJWTProvider>('JWTProvider', JWTProvider)

@@ -4,9 +4,9 @@ import { Star } from 'phosphor-react-native'
 
 export function BookCard() {
   return (
-    <View className='w-full  h-[264px] rounded-lg flex-row mb-5'>
+    <View className='w-full h-[264px] rounded-lg flex-row mb-5'>
       <Image source={bookImage} />
-      <View className='flex-col ml-4 w-[50%] justify-between items-center'>
+      <View className='flex-col ml-4 w-[45%] justify-between items-center'>
         <View>
           <Text className='font-Nunito_Bold text-xl font-bold'>A revolução dos bichos: Um conto de fadas</Text>
           <Text className='text-[#626161] font-Nunito text-sm font-medium'>George Orwell</Text>

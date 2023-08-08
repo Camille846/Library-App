@@ -30,7 +30,7 @@ fastify.register(import('@fastify/static'), {
 fastify.register(multer.contentParser)
 fastify.register(routes)
 
-fastify.listen({ host: '0.0.0.0', port: 3333 }, function (err, address) {
+fastify.listen({ host: '0.0.0.0', port: 5000 }, function (err, address) {
   if (err) {
     fastify.log.error(err)
 

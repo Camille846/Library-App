@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { IGoogleSignInPayload, ISignInWithEmailAndPasswordPayload } from './interfaces/ISignInPayload'
 import { api } from '../../services/axios'
-import { AxiosError } from 'axios'
 
 export const signInWithGoogle = createAsyncThunk('auth/signWithGoogle', async ({ idToken }: IGoogleSignInPayload, { rejectWithValue }) => {
   const config = {

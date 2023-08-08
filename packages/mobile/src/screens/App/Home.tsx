@@ -1,7 +1,5 @@
-import React from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native'
+import { Text, TextInput, View, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import library from '../../../assets/library.png'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { MagnifyingGlass, FunnelSimple } from 'phosphor-react-native'
 import { BookCard } from '../../components/BookCard'

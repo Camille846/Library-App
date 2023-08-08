@@ -1,6 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { store } from '../store'
+import axios from 'axios'
 
 export const api = axios.create({
   baseURL: 'http://192.168.0.85:5000',
