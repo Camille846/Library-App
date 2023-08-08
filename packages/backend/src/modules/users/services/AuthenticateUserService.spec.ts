@@ -4,17 +4,19 @@ import { AppError } from '../../../shared/errors/AppError'
 import { FakeHashProvider } from '../providers/HashProvider/fakes/FakeHashProvider'
 import { FakeUserRepository } from '../repositories/Fakes/FakeUserRepository'
 import { AuthenticateUserService } from '../services/AuthenticateUserService'
+import { JWTProvider } from '../providers/JWTProvider/JWTProvider'
 
 let authenticateUserService: AuthenticateUserService
 let fakeHashProvider: FakeHashProvider
 let usersRepository: FakeUserRepository
+let jwtProvider: JWTProvider
 
 describe('Create user ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()
     usersRepository = new FakeUserRepository()
-
-    authenticateUserService = new AuthenticateUserService(usersRepository, fakeHashProvider)
+    jwtProvider = new JWTProvider()
+    authenticateUserService = new AuthenticateUserService(usersRepository, fakeHashProvider, jwtProvider)
   })
   test('user should able to login with valid credentials', async () => {
     const user = {

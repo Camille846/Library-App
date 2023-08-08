@@ -4,17 +4,19 @@ import { FakeHashProvider } from '../providers/HashProvider/fakes/FakeHashProvid
 import { FakeUserRepository } from '../repositories/Fakes/FakeUserRepository'
 import { AppError } from '../../../shared/errors/AppError'
 import { faker } from '@faker-js/faker'
+import { JWTProvider } from '../providers/JWTProvider/JWTProvider'
 
 let createUserService: CreateUserService
 let fakeHashProvider: FakeHashProvider
 let usersRepository: FakeUserRepository
+let jwtProvider: JWTProvider
 
 describe('Create user ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()
     usersRepository = new FakeUserRepository()
-
-    createUserService = new CreateUserService(usersRepository, fakeHashProvider)
+    jwtProvider = new JWTProvider()
+    createUserService = new CreateUserService(usersRepository, fakeHashProvider, jwtProvider)
   })
 
   test('user should create an account', async () => {
