@@ -5,18 +5,21 @@ import { FakeUserRepository } from '../repositories/Fakes/FakeUserRepository'
 import { AppError } from '../../../shared/errors/AppError'
 import { faker } from '@faker-js/faker'
 import { JWTProvider } from '../providers/JWTProvider/JWTProvider'
+import { IRefreshToken } from '../providers/RefreshTokenProvider/models/IRefreshToken'
+import { FakeRefreshTokenProvider } from '../providers/RefreshTokenProvider/fakes/FakeRefreshToken'
 
 let createUserService: CreateUserService
 let fakeHashProvider: FakeHashProvider
 let usersRepository: FakeUserRepository
 let jwtProvider: JWTProvider
-
+let refreshTokenProvider: IRefreshToken
 describe('Create user ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()
     usersRepository = new FakeUserRepository()
     jwtProvider = new JWTProvider()
-    createUserService = new CreateUserService(usersRepository, fakeHashProvider, jwtProvider)
+    refreshTokenProvider = new FakeRefreshTokenProvider()
+    createUserService = new CreateUserService(usersRepository, fakeHashProvider, jwtProvider, refreshTokenProvider)
   })
 
   test('user should create an account', async () => {
@@ -29,7 +32,8 @@ describe('Create user ', () => {
 
     const response = await createUserService.execute(user)
 
-    expect(response)
+    expect(response).toHaveProperty('token')
+    expect(response).toHaveProperty('refresh_token')
   })
 
   test('user should not able to create an account with an already registered email', async () => {

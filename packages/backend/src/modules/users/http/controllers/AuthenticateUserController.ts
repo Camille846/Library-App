@@ -30,8 +30,8 @@ export class AuthenticateUserController {
       }
     }
 
-    const token = await authenticateUser.execute(inputUser)
+    const { token, refresh_token } = await authenticateUser.execute(inputUser)
 
-    reply.code(200).send(token)
+    reply.code(200).send({ token, refresh_token })
   }
 }

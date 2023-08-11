@@ -18,8 +18,11 @@ model User {
   username             String                 @unique
   avatar               String?
   password             String?
+  refresh_token         RefreshToken?
   libraries            Library[]
   federatedCredentials FederatedCredentials[]
+
+  @@map("users")
 }
 
 model FederatedCredentials {
@@ -27,6 +30,7 @@ model FederatedCredentials {
   provider Provider @default(ApplicationLogin)
   user     User     @relation(fields: [user_id], references: [id])
   user_id  String
+  @@map("federated_credentials")
 }
 
 model Library {
@@ -36,6 +40,7 @@ model Library {
   user      User     @relation(fields: [user_id], references: [id])
   user_id   String
   books     Book[]
+  @@map("libraries")
 }
 
 model Book {
@@ -47,12 +52,14 @@ model Book {
   category    Categories @relation(fields: [category_id], references: [id])
   category_id String
   libraries   Library[]
+  @@map("books")
 }
 
 model Categories {
   id    String @id @default(uuid())
   name  String
   books Book[]
+  @@map("categories")
 }
 
 model Pages {
@@ -62,7 +69,17 @@ model Pages {
   number    Int
   book      Book     @relation(fields: [book_id], references: [id])
   book_id   String
+  @@map("pages")
 }
+
+model RefreshToken{
+  id        String @id @default(uuid())
+  ExpiresIn Int
+  user      User     @relation(fields: [user_id], references: [id])
+  user_id   String   @unique
+  @@map("refresh_token")
+}
+
 
 enum Provider {
   Facebook

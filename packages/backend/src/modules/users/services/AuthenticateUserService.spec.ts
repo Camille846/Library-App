@@ -5,18 +5,23 @@ import { FakeHashProvider } from '../providers/HashProvider/fakes/FakeHashProvid
 import { FakeUserRepository } from '../repositories/Fakes/FakeUserRepository'
 import { AuthenticateUserService } from '../services/AuthenticateUserService'
 import { JWTProvider } from '../providers/JWTProvider/JWTProvider'
+import { IRefreshToken } from '../providers/RefreshTokenProvider/models/IRefreshToken'
+import { FakeRefreshTokenProvider } from '../providers/RefreshTokenProvider/fakes/FakeRefreshToken'
 
 let authenticateUserService: AuthenticateUserService
 let fakeHashProvider: FakeHashProvider
 let usersRepository: FakeUserRepository
 let jwtProvider: JWTProvider
+let refreshTokenProvider: IRefreshToken
 
-describe('Create user ', () => {
+describe('Authenticate user ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()
     usersRepository = new FakeUserRepository()
     jwtProvider = new JWTProvider()
-    authenticateUserService = new AuthenticateUserService(usersRepository, fakeHashProvider, jwtProvider)
+    refreshTokenProvider = new FakeRefreshTokenProvider()
+
+    authenticateUserService = new AuthenticateUserService(usersRepository, fakeHashProvider, jwtProvider, refreshTokenProvider)
   })
   test('user should able to login with valid credentials', async () => {
     const user = {
@@ -26,6 +31,7 @@ describe('Create user ', () => {
     const response = await authenticateUserService.execute(user)
 
     expect(response).toHaveProperty('token')
+    expect(response).toHaveProperty('refresh_token')
   })
   test('user should not able to login with invalid credentials', async () => {
     const user = {

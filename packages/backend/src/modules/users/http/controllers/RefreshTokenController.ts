@@ -1,19 +1,15 @@
+import { RefreshTokenService } from '@modules/users/services/RefreshTokenService'
+import { AppError } from '@shared/errors/AppError'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
-import { CreateUserService } from '../../services/CreateUserService'
 import zod from 'zod'
-import { AppError } from '@shared/errors/AppError'
 
-export class CreateUserController {
+export class RefreshTokenController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const requestSchema = zod.object({
-      full_name: zod.string(),
-      username: zod.string(),
-      email: zod.string().email(),
-      password: zod.string().min(8, 'Password must have at least 8 caracteries'),
+      refresh_token: zod.string(),
     })
-
-    const createUser = container.resolve(CreateUserService)
+    const refreshTokenService = container.resolve(RefreshTokenService)
 
     type IInputUser = zod.infer<typeof requestSchema>
 
@@ -32,8 +28,8 @@ export class CreateUserController {
       }
     }
 
-    const { token, refresh_token } = await createUser.execute(inputUser)
+    const token = await refreshTokenService.execute(inputUser.refresh_token)
 
-    reply.code(201).send({ token, refresh_token })
+    reply.code(201).send({ token })
   }
 }

@@ -4,6 +4,13 @@ import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { AppError } from '@shared/errors/AppError'
 import { IJWTProvider } from '../providers/JWTProvider/models/IJWTProvider'
+import { IRefreshToken } from '../providers/RefreshTokenProvider/models/IRefreshToken'
+import { RefreshToken } from '@prisma/client'
+
+interface IResponse {
+  token: string
+  refresh_token: RefreshToken
+}
 
 @injectable()
 export class CreateUserService {
@@ -13,9 +20,11 @@ export class CreateUserService {
     @inject('HashProvider')
     private hashProvider: IHashProvider,
     @inject('JWTProvider')
-    private jwtProvider: IJWTProvider
+    private jwtProvider: IJWTProvider,
+    @inject('RefreshTokenProvider')
+    private refreshTokenProvider: IRefreshToken
   ) {}
-  async execute(user: ICreateUserDTO): Promise<string> {
+  async execute(user: ICreateUserDTO): Promise<IResponse> {
     const userAlreadyExists = await this.usersRepository.findByEmail(user.email)
 
     const usernameAlreadyTaken = await this.usersRepository.findByUsername(user.username)
@@ -32,6 +41,8 @@ export class CreateUserService {
 
     const token = await this.jwtProvider.sign(createdUser.id)
 
-    return token
+    const refresh_token = await this.refreshTokenProvider.createRefreshToken(createdUser.id)
+
+    return { token, refresh_token }
   }
 }

@@ -4,8 +4,12 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { container } from 'tsyringe'
 import zod from 'zod'
 
+interface Request extends FastifyRequest {
+  userId: string
+}
+
 export class CreateLibraryController {
-  async handle(req: FastifyRequest, reply: FastifyReply) {
+  async handle(req: Request, reply: FastifyReply) {
     const requestSchema = zod.object({
       name: zod.string(),
     })

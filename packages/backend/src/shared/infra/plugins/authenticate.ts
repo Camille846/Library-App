@@ -6,7 +6,11 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 const jwtProvider = new JWTProvider()
 
-export async function authenticate(req: FastifyRequest, reply: FastifyReply, next: NextFunction) {
+interface Request extends FastifyRequest {
+  userId: string
+}
+
+export async function authenticate(req: Request, reply: FastifyReply, next: NextFunction) {
   const { authorization } = req.headers
 
   if (!authorization) throw new AppError('Missing token', 401)

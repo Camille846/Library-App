@@ -3,6 +3,9 @@ import { inject, injectable } from 'tsyringe'
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider'
 import { IUsersRepository } from '../repositories/IUsersRepository'
 import { IJWTProvider } from '../providers/JWTProvider/models/IJWTProvider'
+import { IRefreshToken } from '../providers/RefreshTokenProvider/models/IRefreshToken'
+import { RefreshToken } from '@prisma/client'
+import dayjs from 'dayjs'
 
 interface IRequest {
   email: string
@@ -11,6 +14,7 @@ interface IRequest {
 
 interface IResponse {
   token: string
+  refresh_token: RefreshToken
 }
 
 @injectable()
@@ -21,7 +25,9 @@ export class AuthenticateUserService {
     @inject('HashProvider')
     private hashProvider: IHashProvider,
     @inject('JWTProvider')
-    private jwtProvider: IJWTProvider
+    private jwtProvider: IJWTProvider,
+    @inject('RefreshTokenProvider')
+    private refreshTokenProvider: IRefreshToken
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -40,6 +46,18 @@ export class AuthenticateUserService {
 
     const token = (await this.jwtProvider.sign(user.id)) as string
 
-    return { token }
+    const HaveRefreshToken = await this.refreshTokenProvider.findRefreshTokenByUserId(user.id)
+
+    const isRefreshTokenExpired = HaveRefreshToken && dayjs().isAfter(dayjs.unix(HaveRefreshToken.ExpiresIn))
+
+    if (!isRefreshTokenExpired) {
+      return { token, refresh_token: HaveRefreshToken as RefreshToken }
+    } else {
+      await this.refreshTokenProvider.deleteRefreshToken(HaveRefreshToken.id)
+
+      const refresh_token = await this.refreshTokenProvider.createRefreshToken(user.id)
+
+      return { token, refresh_token }
+    }
   }
 }
