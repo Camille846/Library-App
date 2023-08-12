@@ -21,7 +21,7 @@ export class RefreshTokenService {
 
     const isRefreshTokenExpired = dayjs().isAfter(dayjs.unix(refreshToken.ExpiresIn))
 
-    if (isRefreshTokenExpired) throw new AppError('Refresh token is expired!', 401)
+    if (isRefreshTokenExpired) throw new AppError('Refresh token is expired!', 403)
 
     const token = this.jwtProvider.sign(refreshToken.user_id)
 

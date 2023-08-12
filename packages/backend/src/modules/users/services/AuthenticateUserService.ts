@@ -5,7 +5,7 @@ import { IUsersRepository } from '../repositories/IUsersRepository'
 import { IJWTProvider } from '../providers/JWTProvider/models/IJWTProvider'
 import { IRefreshToken } from '../providers/RefreshTokenProvider/models/IRefreshToken'
 import { RefreshToken } from '@prisma/client'
-import dayjs from 'dayjs'
+import { ValidateRefreshToken } from '../utils/ValidateRefreshToken'
 
 interface IRequest {
   email: string
@@ -46,15 +46,17 @@ export class AuthenticateUserService {
 
     const token = (await this.jwtProvider.sign(user.id)) as string
 
-    const HaveRefreshToken = await this.refreshTokenProvider.findRefreshTokenByUserId(user.id)
+    const { isExpired, haveRefreshToken } = await ValidateRefreshToken(user.id)
 
-    const isRefreshTokenExpired = HaveRefreshToken && dayjs().isAfter(dayjs.unix(HaveRefreshToken.ExpiresIn))
+    if (!isExpired && haveRefreshToken) {
+      return { token, refresh_token: haveRefreshToken }
+    } else if (haveRefreshToken) {
+      await this.refreshTokenProvider.deleteRefreshToken(haveRefreshToken.id)
 
-    if (!isRefreshTokenExpired) {
-      return { token, refresh_token: HaveRefreshToken as RefreshToken }
+      const refresh_token = await this.refreshTokenProvider.createRefreshToken(user.id)
+
+      return { token, refresh_token }
     } else {
-      await this.refreshTokenProvider.deleteRefreshToken(HaveRefreshToken.id)
-
       const refresh_token = await this.refreshTokenProvider.createRefreshToken(user.id)
 
       return { token, refresh_token }

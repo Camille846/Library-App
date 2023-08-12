@@ -10,7 +10,7 @@ interface IHomeProps {
 
 export const Home: React.FC<IHomeProps> = ({ navigation }) => {
   return (
-    <SafeAreaView className='bg-[#6C85D7] flex flex-1'>
+    <SafeAreaView className='bg-[#6C85D7] flex flex-1 items-center'>
       <View className='mt-36 w-full p-2 flex items-center z-2'>
         <Text className='font-Nunito_Bold text-4xl leading-[49px] text-slate-50'>Junte-se a nós e sinta-se em casa.</Text>
       </View>

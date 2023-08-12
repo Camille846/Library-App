@@ -13,6 +13,7 @@ let fakeHashProvider: FakeHashProvider
 let usersRepository: FakeUserRepository
 let jwtProvider: JWTProvider
 let refreshTokenProvider: IRefreshToken
+
 describe('Create user ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()

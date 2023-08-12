@@ -42,7 +42,7 @@ export class FakeUserRepository implements IUsersRepository {
     return newUser
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async createUserOAuth(user: UserAuthInput): Promise<void> {
-    console.log('method not implemented')
+  async createUserOAuth(user: UserAuthInput): Promise<User> {
+    return this.Users[0]
   }
 }

@@ -1,18 +1,24 @@
-import { Text, TextInput, View, FlatList } from 'react-native'
+import { Text, TextInput, View, FlatList, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { MagnifyingGlass, FunnelSimple } from 'phosphor-react-native'
 import { BookCard } from '../../components/BookCard'
 import { Header } from '../../components/Header'
+import { useDispatch } from 'react-redux'
+import { signOut } from '../../store/auth/slice'
 interface IHomeProps {
   navigation: NativeStackNavigationProp<any, any>
 }
 
 export const Home: React.FC<IHomeProps> = ({ navigation }) => {
+  const dispach = useDispatch()
   return (
     <SafeAreaView className='bg-white flex-1 px-5'>
       <Header>
         <Text className='font-Nunito_Bold text-[50px] text-[#FDCC0D]'>Olá!</Text>
+        <TouchableOpacity onPress={() => dispach(signOut())}>
+          <Text>aaaa</Text>
+        </TouchableOpacity>
       </Header>
       <View className='flex-row items-center w-full  mt-[34px]'>
         <View className='bg-[#F2F5FF] h-[42px] w-[317px] rounded-2xl px-3 items-center flex-row'>

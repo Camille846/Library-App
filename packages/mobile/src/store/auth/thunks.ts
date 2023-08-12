@@ -13,7 +13,7 @@ export const signInWithGoogle = createAsyncThunk('auth/signWithGoogle', async ({
     const response = await api.post('/users/oauth/google', {}, config)
     const token = response.data.token
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
+    console.log(response.data)
     return token
   } catch (error) {
     console.log(error)

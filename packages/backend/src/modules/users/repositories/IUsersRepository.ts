@@ -10,7 +10,7 @@ export interface UserAuthInput {
 
 export interface IUsersRepository {
   createUser(user: ICreateUserDTO): Promise<User>
-  createUserOAuth(user: UserAuthInput): Promise<void>
+  createUserOAuth(user: UserAuthInput): Promise<User>
   findByEmail(email: string): Promise<(User & { federatedCredentials: FederatedCredentials[] }) | undefined>
   findByUsername(username: string): Promise<ICreateUserDTO | undefined>
 }

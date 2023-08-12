@@ -45,8 +45,8 @@ export class UsersImplementation implements IUsersRepository {
 
     if (response) return response
   }
-  async createUserOAuth(user: UserAuthInput): Promise<void> {
-    await prisma.user.create({
+  async createUserOAuth(user: UserAuthInput): Promise<User> {
+    return await prisma.user.create({
       data: {
         email: user.email,
         full_name: user.full_name,

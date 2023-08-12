@@ -8,7 +8,12 @@ export class OAuthGoogleController {
     const { authorization } = request.headers
 
     if (!authorization) throw new AppError('You must provide a token', 401)
+    const access_token = authorization.split(' ')[1]
 
     const createUser = container.resolve(OAuthGoogleService)
+
+    const { token, refresh_token } = await createUser.execute({ token: access_token })
+
+    reply.status(200).send({ token, refresh_token })
   }
 }
