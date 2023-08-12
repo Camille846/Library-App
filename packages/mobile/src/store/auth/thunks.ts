@@ -35,10 +35,42 @@ export const signInWithEmailAndPassword = createAsyncThunk(
         email,
         password,
       })
-      const token = response.data.token
+      const { token, refresh_token } = response.data
+
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-      return token
+      return {
+        token,
+        refresh_token,
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+
+    //return rejectWithValue('awds')*/
+  }
+)
+
+export const signUpWithEmailAndPassword = createAsyncThunk(
+  'auth/signWithGoogle',
+  async ({ email, password }: ISignInWithEmailAndPasswordPayload, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/users/login', {
+        email,
+        password,
+      })
+      const { token, refresh_token } = response.data
+
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+      return {
+        token,
+        refresh_token,
+      }
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)

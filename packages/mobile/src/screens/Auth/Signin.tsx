@@ -9,13 +9,13 @@ import google from '../../../assets/google.png'
 import facebook from '../../../assets/facebook.png'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
-import { GoogleSignInConfig } from '../../config/google'
+import { googleSignInConfig } from '../../config/google'
 
 import { useDispatch } from 'react-redux'
 import { signInWithEmailAndPassword, signInWithGoogle } from '../../store/auth/thunks'
 import { AppDispatch } from '../../store'
 
-GoogleSignInConfig
+googleSignInConfig
 
 const Signin: React.FC = () => {
   const signInSchema = zod.object({
@@ -32,7 +32,7 @@ const Signin: React.FC = () => {
     formState: { errors },
   } = useForm<IsignIn>({ resolver: zodResolver(signInSchema) })
 
-  function handleSignIn(data: IsignIn) {
+  function handleSignInWithEmailAndPassword(data: IsignIn) {
     dispatch(signInWithEmailAndPassword(data))
   }
 
@@ -103,7 +103,7 @@ const Signin: React.FC = () => {
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            onPress={handleSubmit(handleSignIn)}
+            onPress={handleSubmit(handleSignInWithEmailAndPassword)}
             className='w-full items-center justify-center h-[60px] bg-[#6C85D7] rounded-3xl mt-12'
           >
             <Text className='font-Nunito_Bold text-2xl text-white'>Entrar</Text>

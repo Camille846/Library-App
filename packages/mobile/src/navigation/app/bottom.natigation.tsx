@@ -1,11 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Profile } from '../../screens/App/Profile'
 import { TouchableOpacity, View } from 'react-native'
 import { twMerge } from 'tailwind-merge'
 import { Home } from '../../screens/App/Home'
 import { LibraryAddIcon } from '../../components/LibraryAddIcon'
 import { BookBookmark, TextAlignLeft } from 'phosphor-react-native'
 import { Libraries } from '../../screens/App/Libraries'
+import { MyLibrary } from '../../screens/App/MyLibrary'
 
 const Tab = createBottomTabNavigator()
 
@@ -35,9 +35,10 @@ function MyTabBar({ state, descriptors, navigation }) {
             target: route.key,
           })
         }
-        const iconsColor = isFocused ? '#E2E2E2' : '#707070'
-        const classNameBorder = twMerge('border-[3px] p-2 border-[#E2E2E2] rounded-full', !isFocused && 'border-[#707070]')
-        const classNameIcon = twMerge('fill-[#E2E2E2] ', !isFocused && 'fill-[#707070]')
+        const iconsColor = isFocused ? '#707070' : '#E2E2E2'
+        const classNameBorder = twMerge('border-[3px] p-2 border-[#707070] rounded-full', !isFocused && 'border-[#E2E2E2]')
+        const classNameIcon = twMerge('fill-[#707070]', !isFocused && 'fill-[#E2E2E2]')
+        console.log(route.name)
 
         return (
           <TouchableOpacity
@@ -51,12 +52,12 @@ function MyTabBar({ state, descriptors, navigation }) {
             onLongPress={onLongPress}
           >
             {route.name === 'Home' && <BookBookmark color={iconsColor} weight='bold' />}
-            {route.name === 'Home3' && (
+            {route.name === 'Libraries' && (
               <View className={classNameBorder}>
                 <LibraryAddIcon className={classNameIcon} />
               </View>
             )}
-            {route.name === 'Libraries' && <TextAlignLeft color={iconsColor} weight='bold' />}
+            {route.name === 'MyLibrary' && <TextAlignLeft color={iconsColor} weight='bold' />}
           </TouchableOpacity>
         )
       })}
@@ -73,8 +74,8 @@ export function BottomNavigation() {
       }}
     >
       <Tab.Screen name='Home' component={Home} />
-      <Tab.Screen name='Home3' component={Profile} />
       <Tab.Screen name='Libraries' component={Libraries} />
+      <Tab.Screen name='MyLibrary' component={MyLibrary} />
     </Tab.Navigator>
   )
 }
